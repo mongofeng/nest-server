@@ -12,14 +12,15 @@ import { join } from 'path';
         destination: join(__dirname, '../../', 'public'),
         filename: (req, file, cb) => {
           // 自定义文件名
-          // const filename = `${nuid.next()}.${file.mimetype.split('/')[1]}`;
-          // return cb(null, filename);
-          return cb(null, file.originalname);
+          const date = new Date();
+          const nuid = date.getTime() + '_' + Math.round(Math.random() * 1000);
+          console.log(nuid);
+          const filename = `${nuid}.${file.mimetype.split('/')[1]}`;
+          return cb(null, filename);
         },
       }),
     }),
-
   ],
-  controllers: [UploadController]
+  controllers: [UploadController],
 })
-export class FileModule { }
+export class FileModule {}
