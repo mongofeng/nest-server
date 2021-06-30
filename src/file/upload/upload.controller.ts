@@ -1,11 +1,19 @@
-import { Controller, Post, UploadedFiles, UseInterceptors } from '@nestjs/common';
-import { FilesInterceptor } from '@nestjs/platform-express';
+import { Controller, Post, UploadedFile, UploadedFiles, UseInterceptors } from '@nestjs/common';
+import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 
 @Controller('upload')
 export class UploadController {
-  @Post('upload')
+  @Post('muti-upload')
   @UseInterceptors(FilesInterceptor('files'))
-  uploadFile(@UploadedFiles() files: Array<Express.Multer.File>) {
+  uploadMutiFile(@UploadedFiles() files: Array<Express.Multer.File>) {
     console.log(files);
+    return "上传成功";
+  }
+
+  @Post('upload')
+  @UseInterceptors(FileInterceptor('file'))
+  uploadFile(@UploadedFile() file: Express.Multer.File) {
+    console.log(file);
+    return "上传成功"
   }
 }
