@@ -10,14 +10,14 @@ import { R } from '../common/pojo/R';
 
 @Controller('upload')
 export class UploadController {
-  @Post('muti-upload')
+  @Post('multi-upload')
   @UseInterceptors(FilesInterceptor('files'))
   uploadMutiFile(@UploadedFiles() files: Array<Express.Multer.File>) {
     console.log(files);
     return R.ok(files);
   }
 
-  @Post('upload')
+  @Post('image')
   @UseInterceptors(FileInterceptor('file'))
   uploadFile(@UploadedFile() file: Express.Multer.File) {
     console.log(file);
