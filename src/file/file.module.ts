@@ -14,7 +14,6 @@ import { join } from 'path';
           // 自定义文件名
           const date = new Date();
           const nuid = date.getTime() + '_' + Math.round(Math.random() * 1000);
-          console.log(nuid);
           const filename = `${nuid}.${file.mimetype.split('/')[1]}`;
           return cb(null, filename);
         },
