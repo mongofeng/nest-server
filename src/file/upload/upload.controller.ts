@@ -6,7 +6,7 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
-import { R } from '../common/pojo/R';
+import { R } from '../../common/pojo/R';
 
 @Controller('upload')
 export class UploadController {
