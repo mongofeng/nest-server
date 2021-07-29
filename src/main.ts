@@ -9,7 +9,6 @@ async function bootstrap() {
   app.useStaticAssets(join(__dirname, '..', 'public'), {
     prefix: '/static/', //设置虚拟路径
   });
-  app.useStaticAssets('temp');
   await app.listen(3000);
 }
 bootstrap();

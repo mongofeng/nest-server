@@ -1,7 +1,7 @@
 import { Controller, Get, Query, Req } from '@nestjs/common';
 import { Request } from 'express';
-import path from 'path';
-import puppeteer from 'puppeteer';
+import * as path from 'path';
+import * as puppeteer from 'puppeteer';
 import { R } from 'src/common/pojo/R';
 
 @Controller('puppeteer')
@@ -9,7 +9,14 @@ export class PuppeteerController {
   @Get('pdf')
   async index(@Query('url') url: string, @Req() request: Request) {
     // 启动pupeteer，加载页面
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({
+      // executablePath: '/usr/bin/chromium-browser',
+      args: ['--disable-dev-shm-usage', '--no-sandbox'],
+    });
+
+    //   args 参数中的 --disable-dev-shm-usage 是为了解决 Docker 中 /dev/shm 共享内存太小不足以支持 Chromium 运行的问题，详见 TIPS。
+    // args 参数中的 --no-sandbox 是为了避免 Chromium 在 Linux 内核中由 sandbox 导致的启动问题。
+
     const page = await browser.newPage();
     await page.setViewport({
       width: 1920,
@@ -21,8 +28,6 @@ export class PuppeteerController {
       waitUntil: 'networkidle0', // 直到没有相应
     });
 
-    console.log(request.protocol);
-
     // 自定义文件名
     const date = new Date();
     const nuid = date.getTime() + '_' + Math.round(Math.random() * 1000);
@@ -30,7 +35,7 @@ export class PuppeteerController {
     // 生成pdf
     const pdfFileName = `体检报告_${nuid}.pdf`;
 
-    const pdfFilePath = path.join(__dirname, '../../../temp', pdfFileName);
+    const pdfFilePath = path.join(__dirname, '../../../public', pdfFileName);
     await page.pdf({
       path: pdfFilePath,
       format: 'a4',
@@ -43,7 +48,7 @@ export class PuppeteerController {
     browser.close();
     // 返回文件路径
     return R.ok({
-      url: `${request.protocol}://${request.hostname}/temp/${pdfFileName}`,
+      url: `${request.protocol}://${request.hostname}/static/${pdfFileName}`,
     });
   }
 }
