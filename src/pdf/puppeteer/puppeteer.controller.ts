@@ -12,7 +12,7 @@ export class PuppeteerController {
     const browser = await puppeteer.launch({
       // executablePath: '/usr/bin/chromium-browser',
       headless: false, //可以看到打开浏览器效果，默认值true
-      args: ['--disable-dev-shm-usage', '--no-sandbox'],
+      args: ['--disable-dev-shm-usage'],
     });
 
     //   args 参数中的 --disable-dev-shm-usage 是为了解决 Docker 中 /dev/shm 共享内存太小不足以支持 Chromium 运行的问题，详见 TIPS。
