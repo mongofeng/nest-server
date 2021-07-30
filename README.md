@@ -67,6 +67,9 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 - [使用puppeteer生成自动分页PDF指南](https://www.qiyuandi.com/zhanzhang/zonghe/12626.html)
 - [https://nestjs.com](https://nestjs.com/)
 - [@nestframework](https://twitter.com/nestframework)
+- phantomjs
+- puppeteer
+- chromium
 
 ## License
 
