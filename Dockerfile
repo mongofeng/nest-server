@@ -1,4 +1,4 @@
-FROM node:14.17-alpine
+FROM node:14-slim
 WORKDIR /app
 
 # 设置相应的时区:http://blog.w2fzu.com/2016/11/21/2016-11-21-Node-and-Mysql-deploy-on-Docker/
