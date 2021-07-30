@@ -1,5 +1,5 @@
 FROM node:14-slim
-WORKDIR /app
+
 
 # 设置相应的时区:http://blog.w2fzu.com/2016/11/21/2016-11-21-Node-and-Mysql-deploy-on-Docker/
 RUN apk add --no-cache tzdata && \
@@ -31,6 +31,7 @@ RUN apt-get update \
 # ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
 
 
+WORKDIR /app
 
 #添加用户所以我们不需要 --no-sandbox。
 RUN groupadd -r pptruser && useradd -r -g pptruser -G audio,video pptruser \
@@ -40,7 +41,6 @@ RUN groupadd -r pptruser && useradd -r -g pptruser -G audio,video pptruser \
 
 #以非特权用户身份运行所有内容。
 USER pptruser
-
 
 COPY ["package.json", "package-lock.json*", ".npmrc", "./"]
 
