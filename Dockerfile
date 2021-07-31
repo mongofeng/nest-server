@@ -2,9 +2,9 @@ FROM node:14-slim
 
 
 # 设置相应的时区:http://blog.w2fzu.com/2016/11/21/2016-11-21-Node-and-Mysql-deploy-on-Docker/
-RUN apk add --no-cache tzdata && \
-    cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo "Asia/Shanghai" > /etc/timezone && \
-    apk del tzdata
+# RUN apk add --no-cache tzdata && \
+#     cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo "Asia/Shanghai" > /etc/timezone && \
+#     apk del tzdata
 
 
 #安装最新的 chrome dev 包和字体以支持主要字符集（中文、日语、阿拉伯语、希伯来语、泰语和其他一些字符集）
