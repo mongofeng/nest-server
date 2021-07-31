@@ -47,8 +47,8 @@ ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
 
 
 #添加用户所以我们不需要 --no-sandbox。
-RUN groupadd -r pptruser && useradd -r -g pptruser -G audio,video pptruser \
-    && mkdir -p /home/pptruser/Downloads \
+RUN addgroup -S pptruser && adduser -S -g pptruser pptruser \
+    && mkdir -p /home/pptruser/Downloads /app \
     && chown -R pptruser:pptruser /home/pptruser \
     && chown -R pptruser:pptruser /app
 
