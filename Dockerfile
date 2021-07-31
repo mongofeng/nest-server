@@ -50,11 +50,13 @@ COPY ["package.json", "package-lock.json*", ".npmrc", "./"]
 
 RUN npm install --procuction
 
-COPY --from=build-env /app/dist/* /app/
+COPY --from=build-env /app/dist /app/
 
 RUN ls
+
+RUN ls dist
 
 
 EXPOSE 3000
 
-CMD ["node", "main.js"]
+CMD ["node", "./dist/main.js"]
