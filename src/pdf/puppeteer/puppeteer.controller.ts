@@ -11,6 +11,7 @@ export class PuppeteerController {
     // 启动pupeteer，加载页面
     const browser = await puppeteer.launch({
       // executablePath: '/usr/bin/chromium-browser',
+      executablePath: 'google-chrome-stable',
       headless: true, //可以看到打开浏览器效果，默认值true
       args: ['--disable-dev-shm-usage'],
     });
