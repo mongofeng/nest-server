@@ -11,7 +11,7 @@ export class PuppeteerController {
     // 启动pupeteer，加载页面
     const browser = await puppeteer.launch({
       // executablePath: '/usr/bin/chromium-browser',
-      executablePath: 'google-chrome-stable',
+      // executablePath: 'google-chrome-stable',
       headless: true, //可以看到打开浏览器效果，默认值true
       args: ['--disable-dev-shm-usage', '--no-sandbox'],
     });
@@ -35,7 +35,7 @@ export class PuppeteerController {
     const nuid = date.getTime() + '_' + Math.round(Math.random() * 1000);
 
     // 生成pdf
-    const pdfFileName = `体检报告_${nuid}.pdf`;
+    const pdfFileName = `${nuid}.pdf`;
 
     const pdfFilePath = path.join(__dirname, '../../../public', pdfFileName);
     await page.pdf({
@@ -50,7 +50,7 @@ export class PuppeteerController {
     browser.close();
     // 返回文件路径
     return R.ok({
-      url: `${request.protocol}://${request.hostname}/static/${pdfFileName}`,
+      url: `${request.protocol}://${request.hostname}/nest-app/static/${pdfFileName}`,
     });
   }
 }
