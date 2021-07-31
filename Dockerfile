@@ -1,5 +1,22 @@
-FROM node:14-slim
+FROM node:14-slim AS build-env
 
+# 设置环境变量
+ENV MY_HOME=/app
+# 新建文件夹
+RUN mkdir -p $MY_HOME
+# 指定工作目录
+WORKDIR $MY_HOME
+
+COPY ["package.json", "package-lock.json*", ".npmrc", "./"]
+
+RUN npm install
+
+COPY . .
+
+RUN npm run build
+
+# # Second stage - build image
+FROM node:14-slim
 WORKDIR /app
 
 # 设置相应的时区:http://blog.w2fzu.com/2016/11/21/2016-11-21-Node-and-Mysql-deploy-on-Docker/
@@ -19,11 +36,6 @@ RUN apt-get update \
       --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
-#如果运行 Docker >= 1.13.0 使用 docker run 的 --init arg 来获取僵尸进程，否则
-#取消以下行的注释以将 `dumb-init` 作为 PID 1 
-#添加 https://github.com/Yelp/dumb -init/releases/download/v1.2.2/dumb-init_1.2.2_x86_64 /usr/local/bin/dumb-init 
-# RUN chmod +x /usr/local/bin/dumb-init
-# ENTRYPOINT ["dumb-init", "--"]
 
 #取消注释以在安装 puppeteer 时跳过 Chrome 下载。如果你这样做了，
 #你需要使用以下命令启动 puppeteer：
@@ -33,23 +45,17 @@ ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
 
 
 
-
-#添加用户所以我们不需要 --no-sandbox。
-# RUN groupadd -r pptruser && useradd -r -g pptruser -G audio,video pptruser \
-#     && mkdir -p /home/pptruser/Downloads \
-#     && chown -RWX pptruser:pptruser /home/pptruser \
-#     && chown -RWX pptruser:pptruser /app
-
-# #以非特权用户身份运行所有内容。
-# USER pptruser
-
 COPY ["package.json", "package-lock.json*", ".npmrc", "./"]
 
 
+RUN npm install --procuction
+
+COPY --from=build-env /app/dist/* /app/
+
+# RUN ls
+
+# RUN pwd
+
 EXPOSE 3000
 
-RUN npm install
-COPY . .
-RUN ls -a
-RUN npm run build
-CMD ["node", "./dist/main.js"]
+CMD ["node", "main.js"]
