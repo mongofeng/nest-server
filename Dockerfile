@@ -29,7 +29,7 @@ RUN apt-get update \
 #你需要使用以下命令启动 puppeteer：
 #     browser.launch({executablePath: 'google-chrome-stable'})
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
-    PUPPETEER_EXECUTABLE_PATH=google-chrome-stable
+    PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome-stable
 
 
 
