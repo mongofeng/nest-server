@@ -35,13 +35,13 @@ ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
 
 
 #添加用户所以我们不需要 --no-sandbox。
-RUN groupadd -r pptruser && useradd -r -g pptruser -G audio,video pptruser \
-    && mkdir -p /home/pptruser/Downloads \
-    && chown -RWX pptruser:pptruser /home/pptruser \
-    && chown -RWX pptruser:pptruser /app
+# RUN groupadd -r pptruser && useradd -r -g pptruser -G audio,video pptruser \
+#     && mkdir -p /home/pptruser/Downloads \
+#     && chown -RWX pptruser:pptruser /home/pptruser \
+#     && chown -RWX pptruser:pptruser /app
 
-#以非特权用户身份运行所有内容。
-USER pptruser
+# #以非特权用户身份运行所有内容。
+# USER pptruser
 
 COPY ["package.json", "package-lock.json*", ".npmrc", "./"]
 
