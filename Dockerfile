@@ -52,9 +52,8 @@ RUN npm install --procuction
 
 COPY --from=build-env /app/dist/* /app/
 
-# RUN ls
+RUN ls
 
-# RUN pwd
 
 EXPOSE 3000
 
