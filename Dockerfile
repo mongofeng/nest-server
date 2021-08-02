@@ -50,11 +50,14 @@ COPY ["package.json", "package-lock.json*", ".npmrc", "./"]
 
 RUN npm install --procuction
 
-COPY --from=build-env /app/dist /app/
+
+
+COPY --from=build-env /app/dist ./dist
+COPY --from=build-env /app/public ./public
 
 RUN ls
 
-RUN ls dist
+RUN pwd
 
 
 EXPOSE 3000
